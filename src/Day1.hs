@@ -4,8 +4,6 @@ import qualified Data.Text.Internal.Search as TS
 import qualified Data.Text as T
 -- Needed for sortBy
 import Data.List
--- For arguments from command line
-import System.Environment
 
 -- Part one only asked for char literals 0-9 to be considered
 map_part_1, map_part_2 :: [(T.Text, Int)]
@@ -23,18 +21,9 @@ get_first_last_num m s = if (length sorted) == 0 then (0,0) else (snd (head sort
 run_day :: String -> [String]
 run_day input = do
   let texts = [T.pack x | x <- lines input]
-
   -- Calculate part 1 and 2
   let part_1 = sum $ map combine $ map (get_first_last_num map_part_1) texts
   let part_2 = sum $ map combine $ map (get_first_last_num map_part_2) texts
-
-  -- Print results
   [("Part 1 : " ++ (show part_1)), ("Part 2 : " ++ (show part_2))]
     where
       combine = \(tens, ones) -> 10 * tens + ones
-
-main = do
-  args <- getArgs
-  filecontent <- if (length args) == 0 then readFile filename else readFile (args !! 0)
-  putStrLn (show (run_day filecontent))
-    where filename = "inputs/day1.txt"
