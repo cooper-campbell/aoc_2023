@@ -5,9 +5,11 @@ import Data.Maybe
 
 -- Import the days
 import Day1 (run_day)
+import Day2 (run_day)
 
 completed_days = [
-  1
+  1,
+  2
                  ]
 
 
@@ -16,12 +18,13 @@ run_days :: [Int] -> IO ()
 run_days [] = putStrLn "Finished running days"
 run_days (d:rest) = do {
                        content <- readFile (printf "inputs/day%d.txt" d)
-                       ; putStrLn (show ((solutions !! (d-1)) content))
+                       ; putStrLn ("Day: " ++ show d ++ " " ++ show ((solutions !! (d-1)) content))
                        ; run_days rest
                        }
   where
     solutions = [
-                Day1.run_day
+                Day1.run_day,
+                Day2.run_day
                 ]
 
 main = do

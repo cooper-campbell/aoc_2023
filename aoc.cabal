@@ -33,7 +33,9 @@ common shared-properties
 
 library
   import: shared-properties
-  exposed-modules: Day1
+  exposed-modules:
+    Day1,
+    Day2
 
   build-depends:
     text ^>= 2.1,
