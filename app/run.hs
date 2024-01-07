@@ -6,10 +6,12 @@ import Data.Maybe
 -- Import the days
 import Day1 (run_day)
 import Day2 (run_day)
+import Day3 (run_day)
 
 completed_days = [
   1,
-  2
+  2,
+  3
                  ]
 
 
@@ -24,7 +26,8 @@ run_days (d:rest) = do {
   where
     solutions = [
                 Day1.run_day,
-                Day2.run_day
+                Day2.run_day,
+                Day3.run_day
                 ]
 
 main = do
