@@ -7,13 +7,9 @@ import Text.Read
 
 
 type Game = (Maybe Int, [Maybe Int], [Maybe Int])
-gameId :: Game -> Maybe Int
-gameId (i,_,_) = i
 
-gameWinning :: Game -> [Maybe Int]
+gameWinning, gameHas :: Game -> [Maybe Int]
 gameWinning (_,w,_) = w
-
-gameHas :: Game -> [Maybe Int]
 gameHas (_,_,h) = h
 
 separator :: Char
@@ -23,9 +19,8 @@ filterNonDigits :: String-> [(Bool, String)]
 filterNonDigits [] = [(False, [])]
 filterNonDigits (c:s) = if isDigit c 
                              then (False, (c : (snd (head remainder)))) : tail remainder
-                             else (sep, []) : remainder
+                             else (c == separator, []) : remainder
   where remainder = filterNonDigits s
-        sep = c == separator 
 
 listTogame :: [Maybe Int] -> Game
 listTogame (g_id:rest) = (g_id,winning,has)
@@ -34,11 +29,6 @@ listTogame (g_id:rest) = (g_id,winning,has)
 
 gameToMatches :: Game -> [Maybe Int]
 gameToMatches g = [x | x <- gameHas g, x `elem` gameWinning g]
-
-listConcat :: [a] -> [a] -> [a]
-listConcat xs [] = xs
-listConcat [] ys = ys
-listConcat (x:xs) ys = x : listConcat xs ys
 
 calcNumCards :: Map.Map Int Int -> [(Int,Int)] -> [Int]
 calcNumCards _ [] = []
