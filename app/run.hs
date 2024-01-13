@@ -1,4 +1,4 @@
-{-# LANGUAGE QuasiQuotes, ExtendedDefaultRules #-}
+{-# LANGUAGE ExtendedDefaultRules #-}
 import System.Environment
 import Text.Printf
 import Data.Maybe
@@ -7,32 +7,37 @@ import Data.Maybe
 import Day1 (run_day)
 import Day2 (run_day)
 import Day3 (run_day)
+import Day4 (runDay)
 
-completed_days = [
+completedDays :: [Int]
+completedDays = [
   1,
   2,
-  3
+  3,
+  4
                  ]
 
 
 
-run_days :: [Int] -> IO ()
-run_days [] = putStrLn "Finished running days"
-run_days (d:rest) = do {
+runDays :: [Int] -> IO ()
+runDays [] = putStrLn "Finished running days"
+runDays (d:rest) = do {
                        content <- readFile (printf "inputs/day%d.txt" d)
                        ; putStrLn ("Day: " ++ show d ++ " " ++ show ((solutions !! (d-1)) content))
-                       ; run_days rest
+                       ; runDays rest
                        }
   where
     solutions = [
                 Day1.run_day,
                 Day2.run_day,
-                Day3.run_day
+                Day3.run_day,
+                Day4.runDay
                 ]
 
+main :: IO ()
 main = do
   args <- getArgs
-  let days = catMaybes [if (read x :: Int) `elem` completed_days then Just (read x :: Int) else Nothing | x <- args]
-  putStrLn ("Ready for days " ++ (show days))
+  let days = catMaybes [if (read x :: Int) `elem` completedDays then Just (read x :: Int) else Nothing | x <- args]
+  putStrLn ("Ready for days " ++ show days)
   
-  run_days days
+  runDays days
